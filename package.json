@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "pharma-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +8,7 @@
   "license": "ISC",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon src/index.js",
     "lint": "eslint \"./**/*.js\" --fix .",
     "prettify": "prettier --write ."
   },

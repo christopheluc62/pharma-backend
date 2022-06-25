@@ -1,15 +1,29 @@
 const express = require('express');
+const cors = require('cors');
+const { db } = require('./db-config');
 
 const app = express();
 
-app.get('/characters', async (req, res) => {
-  res.status(404).send('Route not found! ');
+app.use(cors());
+app.use(express.json());
+
+app.get('/medication', async (req, res) => {
+  const [rows] = await db.query(
+    'SELECT name, expiration FROM medication ORDER BY name ASC'
+  );
+  res.status(200).json(rows);
+});
+
+app.post('/medication', async (req, res) => {
+  const { name } = req.body;
+  await db.query('INSERT INTO medication (name) VALUES (?)', [name]);
+  res.status(201).send('Received new medication name');
 });
 
 app.use('/', (req, res) => {
-  res.status(404).send('Route not found! ');
+  res.status(404).send('medication not found !');
 });
 
-app.listen(5050, () => {
-  console.log('Terra Battle API now available on http://localhost:5050 !');
+app.listen(5051, () => {
+  console.log(`🚀 Server running on http://localhost:5051`);
 });
