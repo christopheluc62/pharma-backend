@@ -15,8 +15,11 @@ app.get('/medication', async (req, res) => {
 });
 
 app.post('/medication', async (req, res) => {
-  const { name } = req.body;
-  await db.query('INSERT INTO medication (name) VALUES (?)', [name]);
+  const { name, expiration } = req.body;
+  await db.query('INSERT INTO medication (name, expiration) VALUES (?, ?)', [
+    name,
+    expiration,
+  ]);
   res.status(201).send('Received new medication name');
 });
 
